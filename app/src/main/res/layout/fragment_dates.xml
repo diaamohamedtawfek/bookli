@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".actitvity.fragment.Dates">
+
+
+   <androidx.core.widget.NestedScrollView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+   <LinearLayout
+       android:orientation="vertical"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+
+      <LinearLayout
+          android:background="@drawable/busin1"
+          android:padding="@dimen/_2sdp"
+          android:layout_marginLeft="@dimen/_5sdp"
+          android:layout_marginRight="@dimen/_5sdp"
+          android:layout_marginTop="@dimen/_11ssp"
+          android:layout_marginBottom="@dimen/_18sdp"
+          android:layout_gravity="center"
+          android:gravity="center"
+          android:layout_width="match_parent"
+          android:orientation="horizontal"
+          android:layout_height="wrap_content">
+
+         <ImageView
+             android:src="@drawable/ic_add_location_black_24dp"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             tools:ignore="VectorDrawableCompat" />
+
+         <Spinner
+             android:layout_gravity="center"
+             android:gravity="center"
+             style="@style/Widget.AppCompat.Spinner.DropDown"
+             android:id="@+id/spinner1"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:spinnerMode="dropdown"/>
+
+      </LinearLayout>
+
+
+
+
+      <androidx.core.widget.NestedScrollView
+          android:id="@+id/nestet"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+
+      <androidx.recyclerview.widget.RecyclerView
+          android:layout_width="match_parent"
+          android:id="@+id/recycal_allcatigry"
+          android:orientation="horizontal"
+          android:layout_height="wrap_content">
+      </androidx.recyclerview.widget.RecyclerView>
+
+      </androidx.core.widget.NestedScrollView>
+
+      <TextView
+          android:layout_marginTop="@dimen/_20sdp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textSize="@dimen/_15sdp"
+          android:textColor="#051716"
+          android:lineSpacingExtra="3.3sp"
+          android:gravity="center_horizontal"
+          android:text="Terms and Conditions"
+          />
+
+      <TextView
+          android:layout_marginBottom="@dimen/_20sdp"
+          android:id="@+id/text_termes_about"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textSize="@dimen/_10ssp"
+          android:textColor="#051716"
+          android:lineSpacingExtra="2sp"
+          android:gravity="center_horizontal"
+          android:text=".Examination by priority of attendance"
+          />
+
+
+      <Button
+          android:id="@+id/bu_booknow_date"
+          android:layout_width="match_parent"
+          android:background="@drawable/busin"
+          android:textColor="#ffffff"
+          android:text="Book Now"
+          android:layout_marginBottom="@dimen/_17sdp"
+          android:textSize="@dimen/_16sdp"
+          android:layout_height="wrap_content" />
+
+   </LinearLayout>
+   </androidx.core.widget.NestedScrollView>
+</FrameLayout>

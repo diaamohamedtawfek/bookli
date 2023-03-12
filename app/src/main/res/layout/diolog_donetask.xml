@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:background="#ddd"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:layout_marginRight="@dimen/_11sdp"
+            android:layout_marginLeft="@dimen/_11sdp"
+            android:paddingRight="@dimen/_9sdp"
+            android:paddingLeft="@dimen/_9sdp"
+            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_22sdp"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_18sdp"
+            android:textColor="#1f2f44"
+            android:letterSpacing="0.01"
+            android:lineSpacingExtra="3sp"
+            android:gravity="center_horizontal"
+            android:text="How is your Visit?"
+            />
+
+        <TextView
+            android:paddingRight="@dimen/_9sdp"
+            android:paddingLeft="@dimen/_9sdp"
+            android:layout_marginTop="@dimen/_25sdp"
+            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_14sdp"
+            android:textColor="#000000"
+            android:letterSpacing="0.02"
+            android:lineSpacingExtra="2sp"
+            android:gravity="center_horizontal"
+            android:text="Your feedback will help improve working experience"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:text="rate doctor"
+            android:layout_height="wrap_content" />
+
+        <RatingBar
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_gravity="center"
+            android:id="@+id/rating_doctor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:saveEnabled="true"
+            android:numStars="5"/>
+        <EditText
+            android:layout_marginRight="@dimen/_11sdp"
+            android:layout_marginLeft="@dimen/_11sdp"
+            android:paddingRight="@dimen/_9sdp"
+            android:id="@+id/ed_comment_doctork"
+            android:hint="Enter Data"
+            android:paddingLeft="@dimen/_12sdp"
+            android:background="@drawable/ed_login"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/_11sdp"
+            android:paddingBottom="@dimen/_11sdp"
+            />
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:text="rate clinic"
+            android:layout_height="wrap_content" />
+
+        <RatingBar
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_gravity="center"
+            android:id="@+id/rating_clinic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:saveEnabled="true"
+            android:numStars="5"/>
+
+
+
+
+
+
+        <EditText
+            android:layout_marginRight="@dimen/_11sdp"
+            android:layout_marginLeft="@dimen/_11sdp"
+            android:paddingRight="@dimen/_9sdp"
+            android:id="@+id/ed_commentclinc"
+            android:hint="Enter Data"
+            android:paddingLeft="@dimen/_12sdp"
+            android:background="@drawable/ed_login"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/_11sdp"
+            android:paddingBottom="@dimen/_11sdp"
+            />
+
+        <Button
+            android:visibility="visible"
+
+            android:layout_marginRight="@dimen/_11sdp"
+            android:layout_marginLeft="@dimen/_11sdp"
+            android:layout_marginBottom="@dimen/_16sdp"
+            android:id="@+id/bu_supmit"
+            android:layout_width="match_parent"
+            android:textColor="#fff"
+            android:text="Submit"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:gravity="center"
+            android:background="@color/colorPrimary"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+
+
+</ScrollView>

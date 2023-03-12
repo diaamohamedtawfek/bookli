@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="@dimen/_155sdp"
+    android:layoutDirection="ltr"
+    app:cardUseCompatPadding="false"
+    android:layout_margin="5dp"
+    app:cardMaxElevation="@dimen/_5sdp"
+    android:id="@+id/card"
+    app:cardCornerRadius="@dimen/_15sdp"
+
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="@dimen/_166sdp"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/text_id_date"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_width="@dimen/_106sdp"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_15sdp"
+            android:textColor="#051716"
+            android:lineSpacingExtra="3.3sp"
+            android:gravity="center_horizontal"
+            android:text="Today"
+            />
+
+        <TextView
+            android:id="@+id/text_dayTitle_date"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_width="@dimen/_106sdp"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_15sdp"
+            android:textColor="#051716"
+            android:lineSpacingExtra="3.3sp"
+            android:gravity="center_horizontal"
+            android:text="Today"
+            />
+
+        <TextView
+            android:layout_marginTop="@dimen/_5sdp"
+            android:id="@+id/text_date_dates"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="46.8sp"
+            android:textColor="#051716"
+            android:lineSpacingExtra="10sp"
+            android:gravity="center_horizontal"
+            android:text="22"
+            />
+
+        <TextView
+            android:layout_marginTop="@dimen/_5sdp"
+            android:id="@+id/text_name_date_dates"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_10sdp"
+            android:textColor="#051716"
+            android:lineSpacingExtra="10sp"
+            android:gravity="center_horizontal"
+            android:text="22"
+            />
+
+        <ImageView
+            android:id="@+id/imagetime"
+            android:layout_margin="@dimen/_5sdp"
+            android:layout_width="@dimen/_20sdp"
+            android:src="@mipmap/ic_time"
+            android:layout_height="@dimen/_20sdp" />
+
+        <TextView
+            android:layout_marginTop="@dimen/_10sdp"
+            android:id="@+id/text_timestart_end_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_11ssp"
+            android:textColor="#007a6f"
+            android:lineSpacingExtra="2sp"
+            android:gravity="center_horizontal"
+            android:text=""
+            android:layout_marginBottom="@dimen/_15sdp"
+            />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

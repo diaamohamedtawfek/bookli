@@ -1,0 +1,432 @@
+package com.example.bookli.actitvity;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import android.content.Context;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.example.bookli.Adapter.RecyclerViewAdapter_AllCatigry;
+import com.example.bookli.Adapter.RecyclerViewAdapter_All_doc_categry;
+import com.example.bookli.Adapter.RecyclerViewAdapter_limetCtogry;
+import com.example.bookli.MySingleton;
+import com.example.bookli.R;
+import com.example.bookli.SharedPrefManager_Login;
+import com.example.bookli.Urls;
+import com.example.bookli.models.DataRecommended.DataRecomendded;
+import com.example.bookli.models.Data_all_Doc_Catogry;
+import com.example.bookli.models.Data_categry_home;
+import com.example.bookli.models.datacategry_jsonSh.DataCattgryJson;
+import com.example.bookli.service;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class All_Doc_Categories extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+
+    String idCat;
+
+    RecyclerView recycal_deliverys;
+    private RecyclerViewAdapter_All_doc_categry recyclerView_dAdapter;
+    public List<Data_all_Doc_Catogry> listItems = new ArrayList<>();
+    private GridLayoutManager gridLayoutManager;
+
+    int REGISTER_URL=0;
+    int REGISTER_URL_mareds;
+    Boolean isScrolling = false;
+    boolean isLoading = false;
+    int currentItems, totalItems, scrollOutItems;
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
+    TextView numDoc;
+    EditText search_categ;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_all__doc__categories);
+
+
+        Bundle extras = getIntent().getExtras(); // to get move intent
+        if (extras != null) {
+            String a = extras.getString("id_Cat");
+            Log.e("idcategry",a);
+            if (a!=null){
+                idCat= a;
+            }
+
+        }
+
+        search_categ=findViewById(R.id.ed_serch_catery_allcategry);
+        search_categ.setFocusableInTouchMode(false);
+        search_categ.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                search_categ.setFocusableInTouchMode(true);
+                search_categ.setFocusableInTouchMode(true);
+                search_categ.requestFocus();
+                InputMethodManager imm = (InputMethodManager)   getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(search_categ, InputMethodManager.SHOW_IMPLICIT);
+            }
+        });
+        search_categ.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // filtercustomer(s.toString());
+                // getjson_onSearch();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //filtercustomer(s.toString());
+                if (search_categ.getText().toString().length()>0) {
+                    getjson_onSearch();
+                }else {
+                    startUI();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                //filtercustomer(s.toString());
+                //getjson_onSearch();
+            }
+        });
+
+
+
+        numDoc=findViewById(R.id.text_numDoc_Allcategry);
+
+        BottomNavigationView bottomNav = findViewById(R.id.nav_view);
+        bottomNav.setOnNavigationItemSelectedListener(navListener);
+
+        // startUI();
+
+        // SwipeRefreshLayout
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,
+                android.R.color.holo_green_dark,
+                android.R.color.holo_orange_dark,
+                android.R.color.holo_blue_dark);
+
+        /**
+         * Showing Swipe Refresh animation on activity create
+         * As animation won't start on onCreate, post runnable is used
+         */
+        mSwipeRefreshLayout.post(new Runnable() {
+
+            @Override
+            public void run() {
+
+                mSwipeRefreshLayout.setRefreshing(true);
+                startUI();
+                // Fetching data from server
+//                if (search_categ.getText().toString().length()<=0){
+//                    startUI();
+//                }else{
+//                    getjson_onSearch();
+//                }
+
+            }
+        });
+    }
+
+
+
+    @Override
+    public void onRefresh() {
+        
+        startUI();
+//        if (search_categ.getText().toString().length() <= 0) {
+//            startUI();
+//        } else {
+//            getjson_onSearch();
+//        }
+    }
+
+
+    private void startUI() {
+        listItems.clear();
+        REGISTER_URL=0;
+        recycal_deliverys = findViewById(R.id.recycal_allcatigry);
+        recycal_deliverys.setHasFixedSize(true);
+        gridLayoutManager = new GridLayoutManager(All_Doc_Categories.this, 1);
+        recycal_deliverys.setLayoutManager(gridLayoutManager);
+        recyclerView_dAdapter = new RecyclerViewAdapter_All_doc_categry(listItems, All_Doc_Categories.this);
+        recycal_deliverys.setAdapter(recyclerView_dAdapter);
+
+        getjson();
+
+//        recycal_deliverys.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//
+//                isScrolling=true;
+//                currentItems = gridLayoutManager.getChildCount();
+//                totalItems = gridLayoutManager.getItemCount();
+//                scrollOutItems = gridLayoutManager.findFirstVisibleItemPosition();
+//
+//                if (gridLayoutManager.findLastCompletelyVisibleItemPosition() == listItems.size() - 1) {
+//                    if (REGISTER_URL<=REGISTER_URL_mareds) {
+//                        //getjson(Integer.parseInt(listItems.get(listItems.size()-1).getType()));
+//                        isScrolling = false;
+//                        getjson();
+//
+////                        REGISTER_URL++;
+//                    }
+//
+//                }
+//                //
+//
+//            }
+//        });
+    }
+
+
+    private void getjson() {
+        listItems.clear();
+        ConnectivityManager conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (conMgr.getActiveNetworkInfo() != null && conMgr.getActiveNetworkInfo().isAvailable() && conMgr.getActiveNetworkInfo().isConnected()) {
+            StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                    Urls.singel_categry +idCat,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            if (response.length() > 0) {
+                                mSwipeRefreshLayout.setRefreshing(false);
+                                // progressDialog.dismiss();
+                                Gson gson = new Gson();
+                                DataRecomendded dataCattgryJson;
+                                dataCattgryJson = gson.fromJson(response.toString(), DataRecomendded.class);
+
+                                numDoc.setText("More than "+dataCattgryJson.getResultData().getTotalItemsCount()+" categories, find what you want.");
+                                int lengt_for=dataCattgryJson.getResultData().getResultData().size();
+                                if (lengt_for > 0){
+                                    Log.e("AllDocCa",""+dataCattgryJson.getResultData().getResultData().get(0).getProfilePicPath());
+                                    for (int x=0;x < lengt_for;x++){
+                                        Log.e("image",dataCattgryJson.getResultData().getResultData().get(x).getProfilePicPath());
+                                        listItems.add(new Data_all_Doc_Catogry(
+                                                dataCattgryJson.getResultData().getResultData().get(x).getProfilePicPath(),
+                                                dataCattgryJson.getResultData().getResultData().get(x).getFullName(),
+                                                dataCattgryJson.getResultData().getResultData().get(x).getScientificDegree(),
+                                                dataCattgryJson.getResultData().getResultData().get(x).getRating(),
+                                                ""+dataCattgryJson.getResultData().getResultData().get(x).getId(),
+
+                                                ""+dataCattgryJson.getResultData().getResultData().get(x).getSavedFlag()
+                                        ));
+
+                                    }
+                                    recyclerView_dAdapter.notifyDataSetChanged();
+                                }
+                            } else {
+                                mSwipeRefreshLayout.setRefreshing(false);
+                                //progressDialog.dismiss();
+                                Log.e("test", "no");
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            mSwipeRefreshLayout.setRefreshing(false);
+                            // progressDialog.dismiss();
+                            if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                                Toast.makeText(getApplicationContext(), "Error Network Time Out", Toast.LENGTH_LONG).show();
+                            } else if (error instanceof AuthFailureError) {
+                                startService(new Intent(getApplicationContext(), service.class));
+                                getjson();
+                                //Toast.makeText(getApplicationContext(), "AuthFailureError", Toast.LENGTH_LONG).show();
+                                //TODO
+                            } else if (error instanceof ServerError) {
+                                Toast.makeText(getApplicationContext(), "ServerError", Toast.LENGTH_LONG).show();
+                                //TODO
+                            } else if (error instanceof NetworkError) {
+                                Toast.makeText(getApplicationContext(), "NetworkError", Toast.LENGTH_LONG).show();
+                                //TODO
+                            } else if (error instanceof ParseError) {
+                                Toast.makeText(getApplicationContext(), "ParseError", Toast.LENGTH_LONG).show();
+                                //TODO
+                            }
+                        }
+                    }
+            ){
+                //            /** Passing some request headers* */
+                @Override
+                public Map getHeaders() throws AuthFailureError {
+                    HashMap headers = new HashMap();
+                    headers.put("Authorization",
+                            SharedPrefManager_Login.getInstance(getApplicationContext()).getjwt());
+                    return headers;
+                }
+            };
+            MySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
+        };
+    }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    //selectedFragment = new HomeFragment();
+                    break;
+                case R.id.navigation_more:
+//                    selectedFragment = new MoreFragment();
+                    break;
+                case R.id.navigation_date:
+//                    selectedFragment = new DateFragment();
+                    break;
+
+                case R.id.navigation_save:
+//                    selectedFragment = new SaveFragment();
+                    break;
+            }
+
+//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+//                    selectedFragment).commit();
+            return true;
+        }
+    };
+
+
+    private void getjson_onSearch() {// to fetch data to show in layout All
+
+        listItems.clear();
+//        final ProgressDialog progressDialog = new ProgressDialog(All_CategoriesActivity.this);
+//        progressDialog.show();
+
+        ConnectivityManager conMgr = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (conMgr.getActiveNetworkInfo() != null && conMgr.getActiveNetworkInfo().isAvailable() && conMgr.getActiveNetworkInfo().isConnected()) {
+            //Toast.makeText(context, "you don't have update "+REGISTER_URL, Toast.LENGTH_SHORT).show();
+            StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                    Urls.singel_categry_search+idCat+"&doctor-name=" +search_categ.getText().toString(),
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            // REGISTER_URL++;
+                            //Toast.makeText(Delvery.this, ""+response, Toast.LENGTH_SHORT).show();
+                            if (response.length() > 0) {
+                                REGISTER_URL++;
+                                mSwipeRefreshLayout.setRefreshing(false);
+                                //progressDialog.dismiss();
+                                Gson gson = new Gson();
+                                DataRecomendded dataCattgryJson;
+                                dataCattgryJson = gson.fromJson(response.toString(), DataRecomendded.class);
+
+//                                 int ids = dataDelevery.getResultDataDto().get(0).getId();
+//                                Log.e("id", "" + ids);
+
+                                numDoc.setText("More than  "+ dataCattgryJson.getResultData().getTotalItemsCount() +"  categories, find what you want.");
+                                float x = dataCattgryJson.getResultData().getTotalItemsCount() / 15;
+                                int x_tkreb = (int) x;
+                                REGISTER_URL_mareds = x_tkreb + 1;
+
+
+                                int lengt_for = dataCattgryJson.getResultData().getResultData().size();
+                                if (lengt_for > 0) {
+
+                                    for (int I = 0; I < lengt_for; I++) {
+                                        listItems.add(new Data_all_Doc_Catogry(
+                                                dataCattgryJson.getResultData().getResultData().get(I).getProfilePicPath(),
+                                                dataCattgryJson.getResultData().getResultData().get(I).getFullName(),
+                                                dataCattgryJson.getResultData().getResultData().get(I).getScientificDegree(),
+                                                dataCattgryJson.getResultData().getResultData().get(I).getRating(),
+                                                ""+dataCattgryJson.getResultData().getResultData().get(I).getId(),
+                                                ""+dataCattgryJson.getResultData().getResultData().get(I).getSavedFlag()
+
+                                        ));
+                                        recyclerView_dAdapter.notifyDataSetChanged();
+                                    }
+                                    ////
+                                    Log.e("REGISTER_URL_mareds", "" + REGISTER_URL_mareds);
+                                    Log.e("REGISTER_URL_mareds", "" + REGISTER_URL);
+                                    Log.e("REGISTER_URL_mareds", "___________________");
+
+                                } else {
+                                    mSwipeRefreshLayout.setRefreshing(false);
+                                    // progressDialog.dismiss();
+                                    Log.e("test", "no");
+                                }
+                            }
+
+
+
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            //progressDialog.dismiss();
+                            mSwipeRefreshLayout.setRefreshing(false);
+                            if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                                Toast.makeText(getApplicationContext(), "Error Network Time Out", Toast.LENGTH_LONG).show();
+                            } else if (error instanceof AuthFailureError) {
+                                REGISTER_URL=0;
+                                startService(new Intent(getApplicationContext(), service.class));
+                                getjson();
+                                //startActivity(new Intent(getApplicationContext(),Log_In.class));
+                                finish();
+                                //Toast.makeText(getApplicationContext(), "AuthFailureError", Toast.LENGTH_LONG).show();
+                                //TODO
+                            } else if (error instanceof ServerError) {
+                                Toast.makeText(getApplicationContext(), "ServerError", Toast.LENGTH_LONG).show();
+                                //TODO
+                            } else if (error instanceof NetworkError) {
+                                Toast.makeText(getApplicationContext(), "NetworkError", Toast.LENGTH_LONG).show();
+                                //TODO
+                            } else if (error instanceof ParseError) {
+                                Toast.makeText(getApplicationContext(), "ParseError", Toast.LENGTH_LONG).show();
+                                //TODO
+                            }
+                        }
+                    }
+            ){
+                //            /** Passing some request headers* */
+                @Override
+                public Map getHeaders() throws AuthFailureError {
+                    HashMap headers = new HashMap();
+                    headers.put("Authorization",
+                            SharedPrefManager_Login.getInstance(getApplicationContext()).getjwt());
+                    return headers;
+                }
+            };
+            MySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
+        } else {
+        }
+
+    }
+
+}

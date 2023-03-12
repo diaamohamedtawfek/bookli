@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="17dp"
+    android:layoutDirection="ltr"
+    android:layout_marginRight="17dp"
+    tools:context=".actitvity.All_CategoriesActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_above="@id/nav_view"
+        android:layout_height="match_parent">
+
+    <TextView
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_20sdp"
+        android:textColor="#007a6f"
+        android:lineSpacingExtra="5.3sp"
+        android:gravity="center_horizontal"
+        android:text="All Categories"
+        />
+
+    <TextView
+        android:id="@+id/text_numDoc_Allcategry"
+        android:layout_marginTop="7dp"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:textSize="@dimen/_10sdp"
+        android:textColor="#afafaf"
+        android:lineSpacingExtra="3sp"
+        android:text="More than 65 categories, find what you want."
+        />
+
+    <EditText
+        android:maxHeight="@dimen/_40sdp"
+        android:visibility="visible"
+        android:id="@+id/ed_serch_catery_allcategry"
+        android:textIsSelectable="true"
+        android:paddingLeft="22dp"
+        android:layout_marginTop="11dp"
+        android:drawableLeft="@mipmap/ic_search_g"
+        android:drawablePadding="12dp"
+        android:background="@drawable/ed_login"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:textSize="17sp"
+        android:textColor="#afafaf"
+        android:lineSpacingExtra="3.5sp"
+        android:hint="Search for gategory"
+        android:layout_marginBottom="21dp"
+        />
+
+
+        <androidx.appcompat.widget.SearchView
+            android:visibility="gone"
+            android:layout_marginBottom="21dp"
+            android:drawablePadding="12dp"
+            android:paddingLeft="22dp"
+            android:layout_marginTop="11dp"
+            android:background="@drawable/ed_login"
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:queryHint="Search Here"
+            android:iconifiedByDefault="false"
+            android:layout_alignParentTop="true"
+            />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipe_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/recycal_allcatigry"
+        android:layout_height="match_parent">
+    </androidx.recyclerview.widget.RecyclerView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+
+    </LinearLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_view"
+        app:labelVisibilityMode="labeled"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="?android:attr/windowBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
+
+</RelativeLayout>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_marginLeft="17dp"
+    android:layout_marginRight="17dp"
+    android:layoutDirection="ltr"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:id="@+id/liner_header"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_140sdp">
+
+        <!--technolifestyle.com.imageslider.FlipperLayout
+            android:id="@+id/flipper_layout"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="180dp"/-->
+
+        <com.daimajia.slider.library.SliderLayout
+            android:id="@+id/slider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_160sdp"
+            />
+
+    </LinearLayout>
+</FrameLayout>

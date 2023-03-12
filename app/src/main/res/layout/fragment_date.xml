@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipe_container"
+        android:layout_marginLeft="@dimen/_17sdp"
+        android:layout_marginRight="@dimen/_17sdp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/text_date_date"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:textSize="18.5sp"
+            android:textColor="#051716"
+            android:lineSpacingExtra="4sp"
+            android:gravity="center"
+            android:text="September 2019"
+            />
+
+
+        <com.github.sundeepk.compactcalendarview.CompactCalendarView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/compactcalendar_view"
+            android:layout_width="fill_parent"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:layout_height="250dp"
+            app:compactCalendarTargetHeight="250dp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            app:compactCalendarTextSize="@dimen/_10sdp"
+            app:compactCalendarBackgroundColor="#fff"
+            app:compactCalendarTextColor="#000"
+            app:compactCalendarCurrentSelectedDayBackgroundColor="@color/colorPrimary"
+            app:compactCalendarCurrentDayBackgroundColor="#ddd"
+            app:compactCalendarMultiEventIndicatorColor="#fff"
+            />
+
+        <!--com.skyhope.eventcalenderlibrary.CalenderEvent
+            android:id="@+id/calender_event"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" /-->
+
+        <com.skyhope.eventcalenderlibrary.CalenderEvent
+            android:id="@+id/calender_event"
+            android:forceHasOverlappingRendering="true"
+            android:layout_width="match_parent"
+            app:selector_color="@color/colorPrimary"
+            app:current_month_day_color="#051716"
+            app:off_month_day_color="@color/colorPrimaryDark"
+            app:week_name_color="@color/colorPrimaryDark"
+            app:month_color="@color/colorPrimaryDark"
+            android:layout_height="wrap_content" />
+
+
+        <!--com.prolificinteractive.materialcalendarview.MaterialCalendarView
+          android:id="@+id/calendarView"
+          android:layout_width="match_parent"
+          android:layout_height="300dp"
+          android:layout_marginBottom="16dp"
+          android:layout_marginTop="16dp" /-->
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:id="@+id/recycal_allcatigry"
+            android:layout_height="match_parent">
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+    </LinearLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</FrameLayout>

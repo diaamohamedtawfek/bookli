@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".actitvity.fragment.About">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+       android:orientation="vertical"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+       <androidx.cardview.widget.CardView
+           app:cardMaxElevation="@dimen/_8sdp"
+           android:layout_width="match_parent"
+           app:cardUseCompatPadding="true"
+           app:cardCornerRadius="@dimen/_8sdp"
+           app:cardElevation="@dimen/_8sdp"
+           android:layout_height="wrap_content">
+
+           <LinearLayout
+               android:orientation="vertical"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+
+               <TextView
+                   android:layout_margin="@dimen/_10sdp"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textSize="@dimen/_18sdp"
+                   android:textColor="#007a6f"
+                   android:gravity="center_horizontal"
+                   android:text="Overview"
+                   />
+               <TextView
+                   android:layout_marginLeft="@dimen/_10sdp"
+                   android:layout_marginRight="@dimen/_10sdp"
+                   android:id="@+id/text_overview_about"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textSize="@dimen/_11ssp"
+                   android:textColor="#051716"
+                   android:text="decryption"
+                   />
+
+           </LinearLayout>
+       </androidx.cardview.widget.CardView>
+
+
+
+       <androidx.cardview.widget.CardView
+           app:cardMaxElevation="@dimen/_8sdp"
+           android:layout_width="match_parent"
+           app:cardUseCompatPadding="true"
+           app:cardCornerRadius="@dimen/_8sdp"
+           app:cardElevation="@dimen/_8sdp"
+           android:layout_height="wrap_content">
+
+           <LinearLayout
+               android:orientation="vertical"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+
+               <TextView
+                   android:layout_margin="@dimen/_10sdp"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textSize="@dimen/_18sdp"
+                   android:textColor="#007a6f"
+                   android:lineSpacingExtra="3.3sp"
+                   android:gravity="center_horizontal"
+                   android:text="Clinic Services"
+                   />
+               <RelativeLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+
+                   <androidx.recyclerview.widget.RecyclerView
+                       android:layout_width="match_parent"
+                       android:id="@+id/recycal_allcatigry"
+                       android:layout_height="wrap_content">
+                   </androidx.recyclerview.widget.RecyclerView>
+
+                   <Button
+                       android:layout_margin="@dimen/_5sdp"
+                       android:id="@+id/bu_numservicedoctor_about"
+                       android:text="+7"
+                       android:textColor="#fff"
+                       android:layout_alignParentBottom="true"
+                       android:layout_alignParentRight="true"
+                       android:background="@drawable/busin"
+                       android:layout_width="@dimen/_32sdp"
+                       android:layout_height="@dimen/_32sdp"
+
+                       />
+
+               </RelativeLayout>
+
+
+
+           </LinearLayout>
+       </androidx.cardview.widget.CardView>
+
+
+
+       <androidx.cardview.widget.CardView
+           app:cardMaxElevation="@dimen/_8sdp"
+           android:layout_width="match_parent"
+           app:cardUseCompatPadding="true"
+           app:cardCornerRadius="@dimen/_8sdp"
+           app:cardElevation="@dimen/_8sdp"
+           android:layout_height="wrap_content">
+
+           <LinearLayout
+               android:orientation="vertical"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+
+               <com.skyhope.materialtagview.TagView
+                   android:visibility="gone"
+                   android:id="@+id/tag_view_test"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="8dp"
+                   android:layout_marginLeft="8dp"
+                   android:layout_marginTop="8dp"
+                   android:layout_marginEnd="8dp"
+                   android:layout_marginRight="8dp"
+                   app:layout_constraintEnd_toEndOf="parent"
+                   app:layout_constraintStart_toStartOf="parent"
+                   app:layout_constraintTop_toTopOf="parent"
+                   app:tag_separator="HASH_SEPARATOR" />
+
+
+               <TextView
+                   android:layout_margin="@dimen/_10sdp"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textSize="@dimen/_18sdp"
+                   android:textColor="#007a6f"
+                   android:lineSpacingExtra="3.3sp"
+                   android:gravity="center_horizontal"
+                   android:text="Clinic Address"
+                   />
+               <TextView
+                   android:gravity="center"
+                   android:drawableLeft="@drawable/ic_add_location_black_24dp"
+                   android:layout_marginLeft="@dimen/_10sdp"
+                   android:layout_marginRight="@dimen/_10sdp"
+                   android:id="@+id/text_addressdoctor_about"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textSize="@dimen/_11ssp"
+                   android:textColor="#051716"
+                   android:text=" 13 Ibrahim El Attar "
+                   />
+
+           </LinearLayout>
+       </androidx.cardview.widget.CardView>
+   </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</FrameLayout>
